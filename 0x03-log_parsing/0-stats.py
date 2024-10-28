@@ -38,19 +38,26 @@ signal(SIGINT, handle_interrupt)
 for line in sys.stdin:
     match = log_format.match(line.strip())
     if match:
-        # Extract status code and file size
-        status_code = int(match.group(3))
-        file_size = int(match.group(4))
+        try:
+            # Extract status code and file size
+            status_code = int(match.group(3))
+            file_size = int(match.group(4))
 
-        # Accumulate file size and status code count
-        total_file_size += file_size
-        if status_code in status_counts:
-            status_counts[status_code] += 1
+            # Accumulate file size and status code count
+            total_file_size += file_size
+            if status_code in status_counts:
+                status_counts[status_code] += 1
+        except (ValueError, IndexError):
+            # Skip line if there is any error in parsing to integer
+            continue
 
         # Count and print stats every 10 lines
         line_count += 1
         if line_count % 10 == 0:
             print_stats()
+    else:
+        # Skip lines that do not match the required format
+        continue
 
 # Final stats printout at end of input
 print_stats()
