@@ -4,7 +4,7 @@
 """
 
 
-def validUTF8(data):
+def validUTF8(data) -> bool:
     """
     Determines if a given list of integers represents valid [UTF-8] encoding.
 
