@@ -41,7 +41,7 @@ for line in sys.stdin:
         # Extract status code and file size
         status_code = int(match.group(3))
         file_size = int(match.group(4))
-        
+
         # Accumulate file size and status code count
         total_file_size += file_size
         if status_code in status_counts:
