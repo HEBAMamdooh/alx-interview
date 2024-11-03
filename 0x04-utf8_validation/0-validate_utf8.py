@@ -9,7 +9,7 @@ def validUTF8(data) -> bool:
     Determines if a given list of integers represents valid [UTF-8] encoding.
 
     Args:
-        data (List[int]): A list of integers where each integer 
+        data (List[int]): A list of integers where each integer
         represents a byte (0-255).
 
     Returns:
@@ -17,7 +17,7 @@ def validUTF8(data) -> bool:
     """
     # Number of bytes remaining in the current UTF-8 character
     bytes_remaining = 0
-    
+
     # Masks for the bitwise operations
     # Mask to check if a byte starts with '10xxxxxx'
     mask1 = 1 << 7    # 10000000
@@ -35,9 +35,9 @@ def validUTF8(data) -> bool:
                 bytes_remaining = 1
             elif (byte >> 4) == 0b1110:  # 1110xxxx => 3-byte character
                 bytes_remaining = 2
-            elif (byte >> 3) == 0b11110: # 11110xxx => 4-byte character
+            elif (byte >> 3) == 0b11110:  # 11110xxx => 4-byte character
                 bytes_remaining = 3
-            elif (byte >> 7):            # 1xxxxxxx => invalid must start with 0 
+            elif (byte >> 7):            # 1xxxxxxx=>invalid must start with 0
                 return False
         else:
             # Check if byte starts with '10'
