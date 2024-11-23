@@ -32,7 +32,7 @@ request(filmUrl, (error, response, body) => {
 });
 
 // Function to fetch character names
-function fetchCharacters(urls) {
+function fetchCharacters (urls) {
   const names = [];
 
   const fetchCharacter = (index) => {
