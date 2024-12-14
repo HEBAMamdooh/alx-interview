@@ -2,10 +2,23 @@
 """Prime Game Module"""
 
 
+def sieve_of_eratosthenes(n):
+    """Generate a list of prime numbers up to n using the Sieve of Eratosthenes."""
+    if n < 2:
+        return []  # No primes for n < 2
+    sieve = [True] * (n + 1)
+    sieve[0], sieve[1] = False, False  # 0 and 1 are not prime numbers
+    for i in range(2, int(n**0.5) + 1):
+        if sieve[i]:
+            for j in range(i * i, n + 1, i):
+                sieve[j] = False
+    return [i for i, is_prime in enumerate(sieve) if is_prime]
+
+
 def isWinner(x, nums):
     """Determine the winner of the prime game."""
     # Validate input
-    if not nums or x <= 0 or any(n < 0 for n in nums):
+    if not nums or x <= 0 or any(n <= 0 for n in nums):
         return None
 
     # Determine the maximum value of n in nums
@@ -24,9 +37,11 @@ def isWinner(x, nums):
                 primes[j] = False
 
     # Precompute the number of primes up to each number
+    primes = sieve_of_eratosthenes(max_n)
+    prime_set = set(primes)
     prime_counts = [0] * (max_n + 1)
     for i in range(1, max_n + 1):
-        prime_counts[i] = prime_counts[i - 1] + (1 if primes[i] else 0)
+        prime_counts[i] = prime_counts[i - 1] + (1 if i in prime_set else 0)
 
     # Game rounds and determining the winner
     maria_wins = 0
